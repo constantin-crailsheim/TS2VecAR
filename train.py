@@ -38,6 +38,15 @@ if __name__ == '__main__':
     parser.add_argument('--max-threads', type=int, default=None, help='The maximum allowed number of threads used by this process')
     parser.add_argument('--eval', action="store_true", help='Whether to perform evaluation after training')
     parser.add_argument('--irregular', type=float, default=0, help='The ratio of missing observations (defaults to 0)')
+    # Edited
+    parser.add_argument('--ar_lr', type=float, default=3e-4, help='The learning rate (defaults to 3e-4)')
+    parser.add_argument('--ar_wd', type=float, default=3e-4, help='The weight decay (defaults to 3e-4)')
+    parser.add_argument('--share', type=float, default=0, help='The share of initial training without adding the AR model (defaults to 0)')
+    parser.add_argument('--ar_wd', type=int, default=5, help='The number of repetitions of the AR model per iteration (defaults to 5)')
+    parser.add_argument('--rel_importance', type=float, default=5, help='The relative importance parameter of the ATC loss (defaults to 5)')
+    parser.add_argument('--context_dims', type=int, default=100, help='The dimensions of context vector learney by the Transformer model (defaults to 100)')
+    parser.add_argument('--time_steps', type=int, default=10, help='The number of future time steps predicted by the context vector (defaults to 10)')
+    # End of edit
     args = parser.parse_args()
     
     print("Dataset:", args.dataset)
@@ -100,7 +109,14 @@ if __name__ == '__main__':
         batch_size=args.batch_size,
         lr=args.lr,
         output_dims=args.repr_dims,
-        max_train_length=args.max_train_length
+        max_train_length=args.max_train_length,
+        ar_lr=args.ar_lr,
+        ar_wd=args.ar_wd,
+        ar_rep=args.ar_rep,
+        lambda_weight=args.rel_importance,
+        share=args.share,
+        context_dims=args.context_dims,
+        time_steps=args.time_steps
     )
     
     if args.save_every is not None:

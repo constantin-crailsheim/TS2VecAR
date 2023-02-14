@@ -25,7 +25,7 @@ class TS2VecAR:
         wd=1e-2,
         ar_wd=3e-4,
         ar_rep=1,
-        lambda_weight=1,
+        rel_importance=1,
         share=0,
         batch_size=16,
         max_train_length=None,
@@ -57,7 +57,7 @@ class TS2VecAR:
         self.wd = wd
         self.ar_wd = ar_wd
         self.ar_rep = ar_rep
-        self.lambda_weight = lambda_weight
+        self.rel_importance = rel_importance
         self.share = share
         self.time_steps = time_steps
 
@@ -69,18 +69,13 @@ class TS2VecAR:
         self.net = torch.optim.swa_utils.AveragedModel(self._net)
         self.net.update_parameters(self._net)
 
-        # Edited
+        # Edited - Improve?
         configAR = {"output_dims": output_dims,
             "timesteps": time_steps,
             "context_dims": context_dims,
             }
 
         self.ar_model = AutoregressiveModel(configAR, self.device).to(self.device)
-
-        # self.projection_head = torch.nn.Sequential(
-        #     torch.nn.Linear(output_dims, configAR["final_out_channels"]),
-        #     torch.nn.ReLU(inplace=True)
-        # )
         
         # End of edit
 
@@ -166,9 +161,6 @@ class TS2VecAR:
                 
                 # Edited
 
-                # ar_contr_loss1 = self.ar_model(out1, out2)
-                # ar_contr_loss2 = self.ar_model(out2, out1)
-
                 # Delayed starting of including AR model
                 ar_rep = self.ar_rep if self.n_iters >= self.share * n_iters else 0 # Check whether also valid for multiple epochs
 
@@ -177,9 +169,6 @@ class TS2VecAR:
                 for _ in range(ar_rep):
                     ar_contr_loss1 += self.ar_model(out1, out2)
                     ar_contr_loss2 += self.ar_model(out2, out1)
-                
-                # out1_tilde = self.projection_head(out1)
-                # out2_tilde = self.projection_head(out2)
 
                 hier_contr_loss = hierarchical_contrastive_loss(
                     out1,
@@ -187,14 +176,14 @@ class TS2VecAR:
                     temporal_unit=self.temporal_unit
                 )
 
-                lambda_weight_adj = self.lambda_weight/ar_rep if ar_rep > 0 else 0
+                rel_importance_adj = self.rel_importance/ar_rep if ar_rep > 0 else 0
 
-                loss = lambda_weight_adj * (ar_contr_loss1 + ar_contr_loss2)/2 + hier_contr_loss
+                loss = rel_importance_adj * (ar_contr_loss1 + ar_contr_loss2)/2 + hier_contr_loss
                 
                 loss.backward()
                 optimizer.step()
                 ar_optimizer.step() # Edited
-                self.net.update_parameters(self._net) # What is this for?
+                self.net.update_parameters(self._net)
                     
                 cum_loss += loss.item()
                 n_epoch_iters += 1
