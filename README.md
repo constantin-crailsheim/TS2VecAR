@@ -1,5 +1,7 @@
 ## TS2VecAR
 
+This repo is the implemtation of the [TS2VecAR](https://github.com/constantin-crailsheim/TS2VecAR/tree/main/paper/TS2VecAR.pdf) paper written in the Unsupervised Deep Learning Seminar at LMU Munich in the winter term 2022/23 under the supervision of [Dr. Mina Rezaei](https://www.slds.stat.uni-muenchen.de/people/minar/)
+
 # Model structure
 
 <p align="center">
@@ -9,7 +11,6 @@
 # Results
 
 ## Setup
-
 
 
 
