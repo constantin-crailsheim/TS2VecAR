@@ -12,6 +12,14 @@ This repo is the implemtation of the [TS2VecAR](https://github.com/constantin-cr
 
 ## Setup
 
+# Requirements
+
+The recommended requirements can be installed with:
+
+```(bash)
+pip install -r requirements.txt
+```
+
 
 
 ## Training
@@ -20,7 +28,6 @@ This repo is the implemtation of the [TS2VecAR](https://github.com/constantin-cr
 ```(bash)
 python train.py <dataset> <run_name> --loader <loader_name>
 ```
-
 
 
 ## Attribution
