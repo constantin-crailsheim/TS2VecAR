@@ -42,3 +42,4 @@ python -u train.py Handwriting default_ar_3 --loader UEA --max-threads 8 --seed 
 python -u train.py NATOPS default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
 python -u train.py RacketSports default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
 python -u train.py UWaveGestureLibrary default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+
