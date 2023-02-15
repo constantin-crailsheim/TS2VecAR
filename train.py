@@ -5,7 +5,7 @@ import os
 import sys
 import time
 import datetime
-from ts2vec import TS2Vec
+from ts2vecar import TS2VecAR
 import tasks
 import datautils
 from utils import init_dl_program, name_with_datetime, pkl_save, data_dropout
@@ -39,10 +39,11 @@ if __name__ == '__main__':
     parser.add_argument('--eval', action="store_true", help='Whether to perform evaluation after training')
     parser.add_argument('--irregular', type=float, default=0, help='The ratio of missing observations (defaults to 0)')
     # Edited
+    parser.add_argument('--run_name_with_date', action="store_true", help='Whether date should be added to run name')
     parser.add_argument('--ar_lr', type=float, default=3e-4, help='The learning rate (defaults to 3e-4)')
     parser.add_argument('--ar_wd', type=float, default=3e-4, help='The weight decay (defaults to 3e-4)')
     parser.add_argument('--share', type=float, default=0, help='The share of initial training without adding the AR model (defaults to 0)')
-    parser.add_argument('--ar_wd', type=int, default=5, help='The number of repetitions of the AR model per iteration (defaults to 5)')
+    parser.add_argument('--ar_rep', type=int, default=5, help='The number of repetitions of the AR model per iteration (defaults to 5)')
     parser.add_argument('--rel_importance', type=float, default=5, help='The relative importance parameter of the ATC loss (defaults to 5)')
     parser.add_argument('--context_dims', type=int, default=100, help='The dimensions of context vector learney by the Transformer model (defaults to 100)')
     parser.add_argument('--time_steps', type=int, default=10, help='The number of future time steps predicted by the context vector (defaults to 10)')
@@ -113,7 +114,7 @@ if __name__ == '__main__':
         ar_lr=args.ar_lr,
         ar_wd=args.ar_wd,
         ar_rep=args.ar_rep,
-        lambda_weight=args.rel_importance,
+        rel_importance=args.rel_importance,
         share=args.share,
         context_dims=args.context_dims,
         time_steps=args.time_steps
@@ -123,12 +124,13 @@ if __name__ == '__main__':
         unit = 'epoch' if args.epochs is not None else 'iter'
         config[f'after_{unit}_callback'] = save_checkpoint_callback(args.save_every, unit)
 
-    run_dir = 'training/' + args.dataset + '__' + name_with_datetime(args.run_name) # Edited
+    print(args.run_name_with_date)
+    run_dir = 'training/' + args.dataset + '__' + (name_with_datetime(args.run_name) if args.run_name_with_date else args.run_name) # Edited
     os.makedirs(run_dir, exist_ok=True)
     
     t = time.time()
     
-    model = TS2Vec(
+    model = TS2VecAR(
         input_dims=train_data.shape[-1],
         device=device,
         **config
