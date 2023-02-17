@@ -1,0 +1,66 @@
+\begin{thebibliography}{}
+
+\bibitem[Bachman et~al., 2019]{bachman2019}
+Bachman, P., Hjelm, R.~D., and Buchwalter, W. (2019).
+\newblock Learning representations by maximizing mutual information across
+  views.
+\newblock {\em CoRR}, abs/1906.00910.
+
+\bibitem[Chen et~al., 2020]{simclr}
+Chen, T., Kornblith, S., Norouzi, M., and Hinton, G.~E. (2020).
+\newblock A simple framework for contrastive learning of visual
+  representations.
+\newblock {\em CoRR}, abs/2002.05709.
+
+\bibitem[Ching et~al., 2018]{ching2020}
+Ching, T., Himmelstein, D.~S., Beaulieu-Jones, B.~K., Kalinin, A.~A., Do,
+  B.~T., Way, G.~P., Ferrero, E., Agapow, P.-M., Zietz, M., Hoffman, M.~M.,
+  Xie, W., Rosen, G.~L., Lengerich, B.~J., Israeli, J., Lanchantin, J.,
+  Woloszynek, S., Carpenter, A.~E., Shrikumar, A., Xu, J., Cofer, E.~M.,
+  Lavender, C.~A., Turaga, S.~C., Alexandari, A.~M., Lu, Z., Harris, D.~J.,
+  DeCaprio, D., Qi, Y., Kundaje, A., Peng, Y., Wiley, L.~K., Segler, M.~H.,
+  Boca, S.~M., Swamidass, S.~J., Huang, A., Gitter, A., and Greene, C.~S.
+  (2018).
+\newblock Opportunities and obstacles for deep learning in biology and
+  medicine.
+\newblock {\em bioRxiv}.
+
+\bibitem[Eldele et~al., 2022]{tstcc}
+Eldele, E., Ragab, M., Chen, Z., Wu, M., Kwoh, C.-K., Li, X., and Guan, C.
+  (2022).
+\newblock Self-supervised contrastive representation learning for
+  semi-supervised time-series classification.
+
+\bibitem[Franceschi et~al., 2019]{franceschi2019}
+Franceschi, J.-Y., Dieuleveut, A., and Jaggi, M. (2019).
+\newblock Unsupervised scalable representation learning for multivariate time
+  series.
+
+\bibitem[Mohsenvand et~al., 2020]{mohsenvand2020}
+Mohsenvand, M.~N., Izadi, M.~R., and Maes, P. (2020).
+\newblock Contrastive representation learning for electroencephalogram
+  classification.
+\newblock In Alsentzer, E., McDermott, M. B.~A., Falck, F., Sarkar, S.~K., Roy,
+  S., and Hyland, S.~L., editors, {\em Proceedings of the Machine Learning for
+  Health NeurIPS Workshop}, volume 136 of {\em Proceedings of Machine Learning
+  Research}, pages 238--253. PMLR.
+
+\bibitem[Oord et~al., 2018]{oord2018}
+Oord, A. v.~d., Li, Y., and Vinyals, O. (2018).
+\newblock Representation learning with contrastive predictive coding.
+
+\bibitem[Tonekaboni et~al., 2021]{tonekaboni2021}
+Tonekaboni, S., Eytan, D., and Goldenberg, A. (2021).
+\newblock Unsupervised representation learning for time series with temporal
+  neighborhood coding.
+
+\bibitem[Vaswani et~al., 2017]{vaswani2017}
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.~N.,
+  Kaiser, L., and Polosukhin, I. (2017).
+\newblock Attention is all you need.
+
+\bibitem[Yue et~al., 2021]{ts2vec}
+Yue, Z., Wang, Y., Duan, J., Yang, T., Huang, C., Tong, Y., and Xu, B. (2021).
+\newblock T{S}2{V}ec: Towards universal representation of time series.
+
+\end{thebibliography}

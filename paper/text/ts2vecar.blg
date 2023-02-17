@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: ts2vecar.aux
+The style file: apalike.bst
+Database file #1: References.bib
+Warning--empty journal in franceschi2019
+You've used 10 entries,
+            1935 wiz_defined-function locations,
+            519 strings with 6312 characters,
+and the built_in function-call counts, 5003 in all, are:
+= -- 425
+> -- 435
+< -- 2
++ -- 162
+- -- 160
+* -- 485
+:= -- 946
+add.period$ -- 25
+call.type$ -- 10
+change.case$ -- 127
+chr.to.int$ -- 10
+cite$ -- 11
+duplicate$ -- 130
+empty$ -- 200
+format.name$ -- 170
+if$ -- 895
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 5
+newline$ -- 47
+num.names$ -- 32
+pop$ -- 122
+preamble$ -- 1
+purify$ -- 127
+quote$ -- 0
+skip$ -- 104
+stack$ -- 0
+substring$ -- 154
+swap$ -- 15
+text.length$ -- 2
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 60
+warning$ -- 1
+while$ -- 24
+width$ -- 0
+write$ -- 115
+(There was 1 warning)

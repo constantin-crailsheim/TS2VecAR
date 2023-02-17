@@ -1,11 +1,11 @@
 # TS2VecAR
 
-This repo is the implemtation of the [TS2VecAR](https://github.com/constantin-crailsheim/TS2VecAR/tree/main/paper/misc/TS2VecAR.pdf) paper written in the Unsupervised Deep Learning Seminar at LMU Munich in the winter term 2022/23 under the supervision of [Dr. Mina Rezaei](https://www.slds.stat.uni-muenchen.de/people/minar/)
+This repo is the implemtation of the [TS2VecAR](https://github.com/constantin-crailsheim/TS2VecAR/tree/main/paper/text/ts2vecar.pdf) paper written in the Unsupervised Deep Learning Seminar at LMU Munich in the winter term 2022/23 under the supervision of [Dr. Mina Rezaei](https://www.slds.stat.uni-muenchen.de/people/minar/)
 
 ## Model structure
 
 <p align="center">
-<img src="paper/misc/ts2vecar.png" width="800" class="center">
+<img src="paper/text/fig/model_setup.png" width="800" class="center">
 </p>
 
 ## Experiments
