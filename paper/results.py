@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd
 import pickle
+import matplotlib.pyplot as plt
 
 # %%
 
@@ -69,5 +70,28 @@ display(results)
 results.loc[len(results)] = ["Mean (HAR datasets)"] + list(results[results["Type"] == "HAR"].mean(axis=0)) + [""]
 
 display(results)
+
+
+# Store as markdown
+
+# https://gist.github.com/jplsightm/c7df5cd2bc62dc84c5158a80cf0af6df
+
+
+# %%
+
+# Plot loss log 
+
+dataset = "UWaveGestureLibrary"
+name = "default_ar_3"
+
+path = "../training/" + dataset + "__" + name + "/"
+
+with open(path + "loss_log.pkl", 'rb') as f:
+    loss_log = pickle.load(f)
+
+plt.plot(np.arange(len(loss_log)), loss_log)
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.savefig("misc/" + dataset + "_" + name + ".png")
 
 # %%

@@ -124,7 +124,6 @@ if __name__ == '__main__':
         unit = 'epoch' if args.epochs is not None else 'iter'
         config[f'after_{unit}_callback'] = save_checkpoint_callback(args.save_every, unit)
 
-    print(args.run_name_with_date)
     run_dir = 'training/' + args.dataset + '__' + (name_with_datetime(args.run_name) if args.run_name_with_date else args.run_name) # Edited
     os.makedirs(run_dir, exist_ok=True)
     
@@ -143,6 +142,7 @@ if __name__ == '__main__':
         verbose=True
     )
     model.save(f'{run_dir}/model.pkl')
+    pkl_save(f'{run_dir}/loss_log.pkl', loss_log) # Edited
 
     t = time.time() - t
     print(f"\nTraining time: {datetime.timedelta(seconds=t)}\n")
@@ -158,7 +158,7 @@ if __name__ == '__main__':
             out, eval_res = tasks.eval_anomaly_detection_coldstart(model, all_train_data, all_train_labels, all_train_timestamps, all_test_data, all_test_labels, all_test_timestamps, delay)
         else:
             assert False
-        # pkl_save(f'{run_dir}/out.pkl', out)
+        pkl_save(f'{run_dir}/out.pkl', out)
         pkl_save(f'{run_dir}/eval_res.pkl', eval_res)
         print('Evaluation result:', eval_res)
 
