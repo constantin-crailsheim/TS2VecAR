@@ -30,18 +30,18 @@ python -u train_ts2vecar.py UWaveGestureLibrary default_ar_2 --loader UEA --max-
 
 # Train with share=0.2
 
-# python -u train_ts2vecar.py SelfRegulationSCP2 default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
-# python -u train_ts2vecar.py StandWalkJump default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
-# python -u train_ts2vecar.py SpokenArabicDigits default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
-# python -u train_ts2vecar.py DuckDuckGeese default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
-# python -u train_ts2vecar.py ArticularyWordRecognition default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
-# python -u train_ts2vecar.py CharacterTrajectories default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
-# python -u train_ts2vecar.py EigenWorms default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
-# python -u train_ts2vecar.py PenDigits default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --time_steps 4 --eval
-# python -u train_ts2vecar.py Handwriting default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
-# python -u train_ts2vecar.py NATOPS default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
-# python -u train_ts2vecar.py RacketSports default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
-# python -u train_ts2vecar.py UWaveGestureLibrary default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py SelfRegulationSCP2 default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py StandWalkJump default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py SpokenArabicDigits default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py DuckDuckGeese default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py ArticularyWordRecognition default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py CharacterTrajectories default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py EigenWorms default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py PenDigits default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --time_steps 4 --eval
+python -u train_ts2vecar.py Handwriting default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py NATOPS default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py RacketSports default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
+python -u train_ts2vecar.py UWaveGestureLibrary default_ar_3 --loader UEA --max-threads 8 --seed 42 --share 0.2 --eval
 
 # Replicate original model
 
