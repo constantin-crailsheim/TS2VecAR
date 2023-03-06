@@ -30,14 +30,14 @@ datasets_and_types = {
 
 accuracies = [[], [], [], []]
 
-run_names = ["default_ar_1", "default_ar_2", "default_ar_3", "UEA_replicated"]
+run_names = ["default_ar_1", "default_ar_2", "default_ar_3", "replicated"]
 model_names = ["AR (s=0)", "AR (s=0.1)", "AR (s=0.2)", "Replicated"]
 
 for dataset_and_type in datasets_and_types.items():
 
     for i, name in enumerate(run_names):
 
-        path = "../training/" + "UEA_" + dataset_and_type[0] + "__" + name + "/"
+        path = "../training/" + dataset_and_type[0] + "__" + name + "/"
 
         with open(path + "eval_res.pkl", 'rb') as f:
             eval_res = pickle.load(f)
@@ -53,6 +53,7 @@ dict_for_df["Type"] = list(datasets_and_types.values())
 
 results = pd.DataFrame(dict_for_df)
 
+pd.options.display.float_format = '{:,.3f}'.format
 display(results)
 
 # %%
@@ -81,17 +82,50 @@ display(results)
 
 # Plot loss log 
 
-dataset = "UWaveGestureLibrary"
-name = "default_ar_3"
+# Set datasets and s
+dataset = "StandWalkJump"
+s = "0.1"
+
+# Plot loss convergence
+s_to_number = {"0": "1", "0.1": "2", "0.2": "3"}
+number = s_to_number[s]
+name = "default_ar_" + number
 
 path = "../training/" + dataset + "__" + name + "/"
 
 with open(path + "loss_log.pkl", 'rb') as f:
     loss_log = pickle.load(f)
 
+fig, axs = plt.subplots(1,1)
+
 plt.plot(np.arange(len(loss_log)), loss_log)
 plt.xlabel("Epochs")
 plt.ylabel("Loss")
-plt.savefig("misc/" + dataset + "_" + name + ".png")
+# plt.title("Loss convergence of " + dataset + " for s = " + s)
+plt.savefig("text/fig/" + dataset + "_" + name + ".png")
+
+
+# %%
+
+# Plot loss log 
+
+s_to_number = {"0": "1", "0.1": "2", "0.2": "3"}
+for dataset in list(datasets_and_types.keys()):
+    for s in ["0", "0.1", "0.2"]:
+        number = s_to_number[s]
+        name = "default_ar_" + number
+
+        path = "../training/" + dataset + "__" + name + "/"
+
+        with open(path + "loss_log.pkl", 'rb') as f:
+            loss_log = pickle.load(f)
+
+        fig, axs = plt.subplots(1,1)
+
+        plt.plot(np.arange(len(loss_log)), loss_log)
+        plt.xlabel("Epochs")
+        plt.ylabel("Loss")
+        plt.title("Loss convergence of " + dataset + " for s = " + s)
+        plt.savefig("misc/" + dataset + "_" + name + ".png")
 
 # %%

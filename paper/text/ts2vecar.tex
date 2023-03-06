@@ -38,7 +38,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 
-\title{TS2VecAR}
+\title{TS2VecAR - Adding autoregressive temporal contrasting to an universal representation of a time series}
 
 
 % The \author macro works with any number of authors. There are two commands
@@ -86,13 +86,13 @@ Department of Statistics\\
 
 
 \begin{abstract}
-While classification of time series data is crucial in various domains, there are only few labelled datasets available. Thus, self-supervised learning provides significant added value to learn the inherent structure of a time series before fine-tuning a classifier. This investigation builds on TS2Vec \citep{ts2vec}, which learns a robust contextual representations of a time series that can be used for several downstream tasks. Inspired by \citet{tstcc}, we add a cross-prediction task of future time stamps using information about previous time stamps as summarised by an autoregressive model. This allows the extended TS2VecAR model to learn more about the structure of the time series. The model outperforms the model on several benchmark datasets, with better average performance on Human Activity Recognition (HAR) datasets.
+While classification of time series data is crucial in various domains, there are only few labelled datasets available. Thus, self-supervised learning provides significant added value to learn the inherent structure of a time series before fine-tuning a classifier. This investigation builds on TS2Vec \citep{ts2vec}, which learns a robust contextual representations of a time series that can be used for several downstream tasks. Inspired by \citet{tstcc}, we add a cross-prediction task of future time stamps using information about previous time stamps as summarised by an autoregressive model. This allows the extended TS2VecAR model to learn more about the structure of the time series. The model outperforms the model on several benchmark datasets, with better average performance on Human Activity Recognition (HAR) datasets. The source code is available at \url{https://github.com/constantin-crailsheim/TS2VecAR}.
 \end{abstract}
 
 
 \section{Introduction and related work}
 
-Time series data play an integral role in science and industry in various fields such as medicine, finance and manufacturing. However, \citet{tstcc} point out that human annotation is very challenging since time series patterns are not easily recognisable by humans, hence only few time series data have been labelled \citep{ching2020}. This demonstrates the need for self-supervised learning methods which can learn the structure of an unlabelled time series in a pretext task and thus require only few labelled instances to fine-tune a classifier. \\
+Time series data play an integral role in science and industry in various fields such as medicine, finance and manufacturing. However, \citet{tstcc} pointed out that human annotation is very challenging since time series patterns are not easily recognisable by humans, hence only few time series data have been labelled \citep{ching2020}. This demonstrates the need for self-supervised learning methods which can learn the structure of an unlabelled time series in a pretext task and thus require only few labelled instances to fine-tune a classifier. \\
 
 Self-supervised representation learning has been particularly popular in computer vision using a contrastive loss function. In contrastive methods, invariant representations of the initial data are learned by inducing similar latent representations for the same instances in a different augmented context and dissimilar latent representations for different instances. \citet{bachman2019} maximize the mutual information between features in multiple views to induce the algorithm to learn higher-level properties of the data. \citet{simclr} propose a simplified contrastive learning framework and highlight the role of data augmentation configurations. \\
 
@@ -127,10 +127,17 @@ The main adaptions are the following:
 
 For comparability, we used the classification task of the whole time series as proposed by \citet{ts2vec} as a downstream task. \textcolor{red}{Why not other downstream tasks?}. This involved fitting an SVM classifier to the instance-level representation of the time series that had been derived by max-pooling over all individual timestamps. This allowed the classes of each instance to be predicted, and the performance was measured in terms of accuracy. \\
 
-To perform experiments, we used the subset of 12 UEA datasets to benchmark against TS2Vec, on which \citet{ts2vec} reported SOTA performance in their paper. The convergence path of the adapted loss function for the ... dataset as an example can be seen below. \\
+To perform experiments, we used the subset of 12 UEA datasets to benchmark against TS2Vec, on which \citet{ts2vec} reported SOTA performance in their paper. The convergence path of the adapted loss function for the StandWalkJump dataset as an example can be seen below. \\
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fig/StandWalkJump_default_ar_2.png}
+  \caption{Loss convergence of StandWalkJump dataset for s=0.1}
+\end{figure}
 
-Since my implementation was done in a slightly different Python environment, we compared TS2VecAR to the replicated results of TS2Vec with the default settings as specified in their repository. The results of the experiments\footnote{As hyperparemeters we chose $\lambda = 5$ since the ATC loss is smaller than the HC loss and $m=5$ to allow for sufficient cross prediction tasks in each iteration. All models were trained for the 600 iterations as specified default in TS2Vec.} are shown below, with different specifications of the share of iterations which did not include the autoregressive temporal contrasting component. \\
+The loss converges fairly quickly for the model without integrating the AR model. After 60 epochs, the loss jumps up since the additional objective of the AR model was added. The combined objective then converges to a similar low value as the initial model, although the convergence is not as smooth as without the combined objective. \\
+
+Since our implementation was done in a slightly different Python environment, we compared TS2VecAR to the replicated results of TS2Vec with the default settings as specified in their repository. The results of the experiments\footnote{As hyperparemeters we chose $\lambda = 5$ since the ATC loss is smaller than the HC loss and $m=5$ to allow for sufficient cross prediction tasks in each iteration. All models were trained for the 600 iterations as specified default in TS2Vec.} are shown below, with different specifications of the share of iterations which did not include the autoregressive temporal contrasting component. \\
 
 \begin{center}
 \begin{tabular}{lrrrrl}
@@ -138,27 +145,27 @@ Since my implementation was done in a slightly different Python environment, we 
                   Dataset &  AR (s=0) & AR (s=0.1) &  AR (s=0.2) &  Replicated &   Type \\
 \midrule
        SelfRegulationSCP2 &              0.544 &                0.550 &                0.550 &       \textbf{0.556} &    EEG \\
-            StandWalkJump &              0.467 &                0.467 &                0.400 &       0.467 &    ECG \\
+            StandWalkJump &              \textbf{0.533} &                0.467 &                0.400 &       0.467 &    ECG \\
         SpokenArabicDigits &              0.967 &                0.959 &                0.977 &       \textbf{0.989} & Speech \\
             DuckDuckGeese &              0.460 &                0.460 &                \textbf{0.540} &       0.520 &  Audio \\
-ArticularyWordRecognition &              \textbf{0.980} &                0.970 &                0.977 &       0.977 & Motion \\
+ArticularyWordRecognition &              \textbf{0.987} &                0.970 &                0.977 &       0.977 & Motion \\
     CharacterTrajectories &              0.991 &                0.993 &                \textbf{0.994} &       0.992 & Motion \\
                EigenWorms &              0.786 &                0.756 &                0.809 &       \textbf{0.863} & Motion \\
                  PenDigits &              0.988 &                0.986 &                \textbf{0.990} &       0.989 & Motion \\
-              Handwriting &              0.545 &                \textbf{0.551} &                0.548 &       0.531 &    HAR \\
-                   NATOPS &              0.922 &                0.839 &                0.878 &       \textbf{0.939} &    HAR \\
-             RacketSports &              0.882 &                0.888 &                \textbf{0.895} &       0.855 &    HAR \\
-      UWaveGestureLibrary &              0.916 &                \textbf{0.925} &                0.919 &       0.906 &    HAR \\
+              Handwriting &              \textbf{0.556} &               0.551 &                0.548 &       0.531 &    HAR \\
+                   NATOPS &              0.911 &                0.839 &                0.878 &       \textbf{0.939} &    HAR \\
+             RacketSports &              0.888 &                0.888 &                \textbf{0.895} &       0.855 &    HAR \\
+      UWaveGestureLibrary &              0.919 &                \textbf{0.925} &                0.919 &       0.906 &    HAR \\
  \midrule
- Mean (All datasets) & 0.787 & 0.779 & 0.790 & \textbf{0.798} & \\
- Mean (HAR datasets) & \textbf{0.816} & 0.801 & 0.810 & 0.808 &  \\
+ Mean (All datasets) & 0.794 & 0.779 & 0.790 & \textbf{0.799} & \\
+ Mean (HAR datasets) & \textbf{0.819} & 0.801 & 0.810 & 0.808 &  \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-In 7 out of 12 datasets TS2Vec is outperformed by at least one specification of TS2VecAR. However, on average, TS2Vec still has the highest accuracy, partly due to the very low performance of the  $s=0$ and $s=1$ specifications in the DuckDuckGeese and Eigenworms datasets, and the $s=0.2$ specification in the StandWalkJump and EigenWorms and NATOPS datasets. \\
+In 8 out of 12 datasets TS2Vec is outperformed by at least one specification of TS2VecAR. However, on average, TS2Vec still has the highest accuracy, partly due to the very low performance of the  $s=0$ and $s=1$ specifications in the DuckDuckGeese and Eigenworms datasets, and the $s=0.2$ specification in the StandWalkJump and EigenWorms and NATOPS datasets. \\
 
-Considering only the subsample of Human Activity Recognition (HAR) datasets, TS2VecAR outperforms TS2Vec on three out of four datasets in all specifications.  On average, the improvement is $0.8\%$ when comparing the $s=0$ specification to TS2Vec. However, the best individual performances are achieved by including the autoregressive temporal contrasting after some initial training using only hierarchical contrasting. This suggests that it may be beneficial to first learn a better representation before using it for the cross-prediction task. However, the average accuracy for these specifications is compromised by the low performance on the NATOPS dataset.
+Considering only the subsample of Human Activity Recognition (HAR) datasets, TS2VecAR outperforms TS2Vec on three out of four datasets in all specifications.  On average, the improvement is $1.1\%$ when comparing the $s=0$ specification to TS2Vec. However, the for some datasets better individual performances can be achieved by including the autoregressive temporal contrasting after some initial training using only hierarchical contrasting. This suggests that it may be beneficial to first learn a better representation before using it for the cross-prediction task. However, the average accuracy for these specifications is compromised by the low performance on the NATOPS dataset.
 
 \section{Conclusion}
 
@@ -170,17 +177,5 @@ TS2Vec has shown very strong results in learning robust latent representations o
 \bibliography{References}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-\appendix
-
-
-\section{Appendix}
-
-
-Optionally include extra information (complete proofs, additional experiments and plots) in the appendix.
-This section will often be part of the supplemental material.
-
 
 \end{document}
