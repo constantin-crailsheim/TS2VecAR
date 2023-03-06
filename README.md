@@ -18,7 +18,7 @@ The recommended default hyperparameter are:
 |---|---|
 | Total iterations | 600 |
 | m  | 5  |
-| &lambda | 5  |
+| &lambda; | 5  |
 | k  | 10  |
 | Context dimensions  | 100  |
 | AR learning rate  | 3e-4  |
