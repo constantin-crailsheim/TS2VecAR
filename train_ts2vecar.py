@@ -106,6 +106,7 @@ if __name__ == '__main__':
             raise ValueError(f"Task type {task_type} is not supported when irregular>0.")
     print('done')
     
+    # Edit: Hyperparameters added.
     config = dict(
         batch_size=args.batch_size,
         lr=args.lr,
@@ -119,6 +120,7 @@ if __name__ == '__main__':
         context_dims=args.context_dims,
         time_steps=args.time_steps
     )
+    # End of edit.
     
     if args.save_every is not None:
         unit = 'epoch' if args.epochs is not None else 'iter'
