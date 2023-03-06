@@ -24,7 +24,13 @@ The recommended default hyperparameter are:
 | AR learning rate  | 3e-4  |
 | AR weight decay  | 3e-4  |
 
+### Datasets
+
+The datasets used for the paper can be found at [UEA dataset](http://www.timeseriesclassification.com/dataset.php). They should be stored in `datasets/UEA/` such that they can be found in `datasets/UEA/<dataset_name>/<dataset_name>_*.arff`.
+
 ### Results
+
+
 
 # Setup
 

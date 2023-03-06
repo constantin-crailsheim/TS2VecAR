@@ -1,4 +1,4 @@
-# Code copied from TS-TCC
+# Source: https://github.com/emadeldeen24/TS-TCC
 
 import torch
 import torch.nn as nn

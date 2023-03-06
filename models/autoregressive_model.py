@@ -1,3 +1,5 @@
+# Source: https://github.com/emadeldeen24/TS-TCC
+
 import torch
 import torch.nn as nn
 import numpy as np
@@ -44,4 +46,4 @@ class AutoregressiveModel(nn.Module):
             total = torch.mm(encode_samples[i], torch.transpose(pred[i], 0, 1)) # (batch_size, batch_size)
             nce += torch.sum(torch.diag(self.lsoftmax(total)))
         nce /= -1. * batch * self.timestep
-        return nce # , self.projection_head(c_t)
+        return nce # Edit: removed self.projection_head(c_t).

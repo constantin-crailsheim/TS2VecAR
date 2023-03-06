@@ -28,9 +28,6 @@ def instance_contrastive_loss(z1, z2):
     z = torch.cat([z1, z2], dim=0)  # 2B x T x C
     z = z.transpose(0, 1)  # T x 2B x C
 
-    # Edited
-    # sim = cosine_similarity(z)
-
     sim = torch.matmul(z, z.transpose(1, 2))
     logits = torch.tril(sim, diagonal=-1)[:, :, :-1]    # T x 2B x (2B-1)
     logits += torch.triu(sim, diagonal=1)[:, :, 1:]
@@ -46,9 +43,6 @@ def temporal_contrastive_loss(z1, z2):
         return z1.new_tensor(0.)
     z = torch.cat([z1, z2], dim=1)  # B x 2T x C
 
-    # Edited
-    # sim = cosine_similarity(z)
-
     sim = torch.matmul(z, z.transpose(1, 2))  # B x 2T x 2T
     logits = torch.tril(sim, diagonal=-1)[:, :, :-1]    # B x 2T x (2T-1)
     logits += torch.triu(sim, diagonal=1)[:, :, 1:]
@@ -58,12 +52,7 @@ def temporal_contrastive_loss(z1, z2):
     loss = (logits[:, t, T + t - 1].mean() + logits[:, T + t, t].mean()) / 2
     return loss
 
-# Edited
-def cosine_similarity(z):
-    l2_norm = torch.norm(input=z, p=2, dim = 2).unsqueeze(-1)
-    l2_norm_mat = torch.matmul(l2_norm, l2_norm.transpose(1,2))
-    return torch.div(torch.matmul(z, z.transpose(1, 2)), l2_norm_mat)
-
+# Added from source: https://github.com/emadeldeen24/TS-TCC
 class NTXentLoss(torch.nn.Module):
 
     def __init__(self, device, batch_size, temperature, use_cosine_similarity):

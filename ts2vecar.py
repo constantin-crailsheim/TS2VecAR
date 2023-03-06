@@ -8,7 +8,7 @@ from models.losses import hierarchical_contrastive_loss
 from utils import take_per_row, split_with_nan, centerize_vary_length_series, torch_pad_nan
 import math
 
-class TS2VecAR:
+class TS2VecAR: # Edit: Rename model.
     '''The TS2Vec model'''
     
     def __init__(
@@ -52,7 +52,7 @@ class TS2VecAR:
         super().__init__()
         self.device = device
         self.lr = lr
-        # Edited
+        # Start of edit: Store additional hyperparameter.
         self.ar_lr = ar_lr
         self.wd = wd
         self.ar_wd = ar_wd
@@ -60,6 +60,7 @@ class TS2VecAR:
         self.rel_importance = rel_importance
         self.share = share
         self.time_steps = time_steps
+        # End of edit.
 
         self.batch_size = batch_size
         self.max_train_length = max_train_length
@@ -69,14 +70,13 @@ class TS2VecAR:
         self.net = torch.optim.swa_utils.AveragedModel(self._net)
         self.net.update_parameters(self._net)
 
-        # Edited - Improve?
+        # Start of edit: Initializing AR model
         configAR = {"output_dims": output_dims,
             "timesteps": time_steps,
             "context_dims": context_dims,
             }
 
         self.ar_model = AutoregressiveModel(configAR, self.device).to(self.device)
-        
         # End of edit
 
         self.after_iter_callback = after_iter_callback
@@ -118,8 +118,9 @@ class TS2VecAR:
         
         optimizer = torch.optim.AdamW(self._net.parameters(), lr=self.lr)
 
-        # Edited 
-        ar_optimizer = torch.optim.AdamW(self.ar_model.parameters(), lr=self.ar_lr, weight_decay=self.ar_wd) 
+        # Start of edit: Set optimizer of AR model.
+        ar_optimizer = torch.optim.AdamW(self.ar_model.parameters(), lr=self.ar_lr, weight_decay=self.ar_wd)
+        # End of edit.
         
         loss_log = []
         
@@ -158,31 +159,38 @@ class TS2VecAR:
                 
                 out2 = self._net(take_per_row(x, crop_offset + crop_left, crop_eright - crop_left))
                 out2 = out2[:, :crop_l]
-                
-                # Edited
-
-                # Delayed starting of including AR model
-                ar_rep = self.ar_rep if self.n_iters >= self.share * n_iters else 0 # Check whether also valid for multiple epochs
-
-                ar_contr_loss1, ar_contr_loss2 = 0, 0
-
-                for _ in range(ar_rep):
-                    ar_contr_loss1 += self.ar_model(out1, out2)
-                    ar_contr_loss2 += self.ar_model(out2, out1)
 
                 hier_contr_loss = hierarchical_contrastive_loss(
                     out1,
                     out2,
                     temporal_unit=self.temporal_unit
                 )
+                
+                # Start of edit: Autoregressive temporal contrasting. 
 
+                # Delayed inclusion of AR model after initial training of embeddings.
+                ar_rep = self.ar_rep if self.n_iters >= self.share * n_iters else 0
+
+                # Repeated cross-prediction task with AR model on sampled window of time-series.
+                ar_contr_loss1, ar_contr_loss2 = 0, 0
+
+                for _ in range(ar_rep):
+                    ar_contr_loss1 += self.ar_model(out1, out2)
+                    ar_contr_loss2 += self.ar_model(out2, out1)
+
+                # Setting the the relative importance parameter reweighted by the number of repetitions of the cross-prediction task.
                 rel_importance_adj = self.rel_importance/ar_rep if ar_rep > 0 else 0
 
+                # Computation of the loss
                 loss = rel_importance_adj * (ar_contr_loss1 + ar_contr_loss2)/2 + hier_contr_loss
                 
+                # End of edit.
+
                 loss.backward()
                 optimizer.step()
-                ar_optimizer.step() # Edited
+                # Edit: Optimizer step of AR model 
+                ar_optimizer.step() 
+                # End of edit.
                 self.net.update_parameters(self._net)
                     
                 cum_loss += loss.item()
