@@ -30,25 +30,24 @@ The datasets used for the paper can be found at [UEA dataset](http://www.timeser
 
 ### Results
 
+The results of the experiments for different values of the share of iterations which did not include the autoregressive temporal contrasting component are as following:
+
 Dataset|AR (s=0)|AR (s=0.1)|AR (s=0.2)|Replicated|Type
 ---|---|---|---|---|---
-SelfRegulationSCP2|0.5444444444444444|0.55|0.55|0.5555555555555556|EEG
-StandWalkJump|0.5333333333333333|0.4666666666666667|0.4|0.4666666666666667|ECG
-SpokenArabicDigits|0.9672578444747613|0.9590723055934516|0.9768076398362893|0.9890859481582538|Speech
-DuckDuckGeese|0.46|0.46|0.54|0.52|Audio
-ArticularyWordRecognition|0.9866666666666667|0.97|0.9766666666666667|0.9766666666666667|Motion
-CharacterTrajectories|0.9909470752089137|0.9930362116991643|0.9937325905292479|0.9923398328690808|Motion
-EigenWorms|0.7862595419847328|0.7557251908396947|0.8091603053435115|0.8625954198473282|Motion
-PenDigits|0.9877072612921669|0.9859919954259577|0.9899942824471126|0.9885648942252716|Motion
-Handwriting|0.5564705882352942|0.5505882352941176|0.548235294117647|0.5305882352941177|HAR
-NATOPS|0.9111111111111111|0.8388888888888889|0.8777777777777778|0.9388888888888889|HAR
-RacketSports|0.8881578947368421|0.8881578947368421|0.8947368421052632|0.8552631578947368|HAR
-UWaveGestureLibrary|0.91875|0.925|0.91875|0.90625|HAR
-Mean (all datasets)|0.7942588134573555|0.7785939490953987|0.7896551165686262|0.7985387721722139|
-Mean (HAR datasets)|0.8186223985208119|0.8006587547299622|0.809874978500172|0.8077475705194358|
-Mean (HAR datasets)|0.8186223985208119|0.8006587547299622|0.809874978500172|0.8077475705194358|
-Mean (HAR datasets)|0.8186223985208119|0.8006587547299622|0.809874978500172|0.8077475705194358|
-
+SelfRegulationSCP2|0.544|0.550|0.550|<strong>0.556</strong>|EEG
+StandWalkJump|<strong>0.533|0.467|0.400|0.467|ECG
+SpokenArabicDigits|0.967|0.959|0.977|<strong>0.989</strong>|Speech
+DuckDuckGeese|0.460|0.460|<strong>0.540</strong>|0.520|Audio
+ArticularyWordRecognition|<strong>0.987</strong>|0.970|0.977|0.977|Motion
+CharacterTrajectories|0.991|0.993|<strong>0.994</strong>|0.992|Motion
+EigenWorms|0.786|0.756|0.809|<strong>0.863</strong>|Motion
+PenDigits|0.988|0.986|<strong>0.990</strong>|0.989|Motion
+Handwriting|<strong>0.556|0.551|0.548|0.531|HAR
+NATOPS|0.911|0.839|0.878|<strong>0.939</strong>|HAR
+RacketSports|0.888|0.888|<strong>0.895</strong>|0.855|HAR
+UWaveGestureLibrary|0.919|<strong>0.925</strong>|0.919|0.906|HAR
+Mean (all datasets)|0.794|0.779|0.790|<strong>0.799</strong>|
+Mean (HAR datasets)|<strong>0.819</strong>|0.801|0.810|0.808|
 
 # Setup
 
