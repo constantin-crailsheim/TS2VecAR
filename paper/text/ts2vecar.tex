@@ -135,7 +135,7 @@ To perform experiments, we used the subset of 12 UEA datasets to benchmark again
   \caption{Loss convergence of StandWalkJump dataset for s=0.1}
 \end{figure}
 
-The loss converges fairly quickly for the model without integrating the AR model. After 60 epochs, the loss jumps up since the additional objective of the AR model was added. The combined objective then converges to a similar low value as the initial model, although the convergence is not as smooth as without the combined objective. \\
+The loss converges fairly quickly for the initial TS2Vec model. After 60 epochs, the loss jumps up since the additional AR model objective was added. The combined objective then converges to a similar low value as the initial model, although the convergence is not as smooth as without the combined objective. \\
 
 Since our implementation was done in a slightly different Python environment, we compared TS2VecAR to the replicated results of TS2Vec with the default settings as specified in their repository. The results of the experiments\footnote{As hyperparemeters we chose $\lambda = 5$ since the ATC loss is smaller than the HC loss and $m=5$ to allow for sufficient cross prediction tasks in each iteration. All models were trained for the 600 iterations as specified default in TS2Vec.} are shown below, with different specifications of the share of iterations which did not include the autoregressive temporal contrasting component. \\
 
